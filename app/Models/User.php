@@ -6,11 +6,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Observers\WalletObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
+use Laravel\Sanctum\HasApiTokens;
+
+//Enregistrement de l'observer
+
+//Le but de l'observer ici est de pourvoir ecouter le cycle de vie du model user,
+//donc de tel en sorte que lorsqu'on creer un User cela creer aussi de manier automatique son Wallet (sont compte)
+#[ObservedBy([WalletObserver::class])]
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, HasApiTokens, Notifiable;
 
     /**
      * The attributes that are mass assignable.
