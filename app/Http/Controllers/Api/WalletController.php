@@ -38,7 +38,7 @@ class WalletController extends Controller
         $transaction = DB::transaction(function () use ($wallet, $amount) {
             $wallet->increment('balance', $amount);
 
-            return Transaction::created([
+            return Transaction::create([
                 'from_wallet_id' => null,
                 'to_wallet_id' => $wallet->id,
                 'amount' => $amount,
